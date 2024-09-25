@@ -33,15 +33,24 @@ pipeline {
                 }
             }
         }
-        stage('Code Quality Analysis') {
+       stage('Code Quality Analysis') {
             steps {
                 echo 'Running code quality analysis...'
-                // Using SonarQube
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
+                withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+                    // Using SonarQube
+                    withSonarQubeEnv('SonarQube') {
+                        sh '''
+                            mvn sonar:sonar \
+                                -Dsonar.projectKey=projectone \
+                                -Dsonar.projectName="projectone" \
+                                -Dsonar.host.url=http://localhost:9000 \
+                                -Dsonar.token=sqa_7260cdc6c9a4d431a00b562873388d74ea613c66
+                        '''
+                    }
                 }
             }
         }
+
     }
     post {
         always {

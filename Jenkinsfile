@@ -1,13 +1,13 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven-3.9.9' // This is the name you gave in the Global Tool Configuration
+        maven 'Maven-3.9.9' 
     }
     stages {
         stage('Build') {
             steps {
                 echo 'Building the application...'
-                // For a Maven project, for example, the following command can be used:
+                
                 sh 'mvn clean package'
             }
             post {
@@ -20,7 +20,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                // Run unit tests using Maven, for example:
+                
                 sh 'mvn test'
             }
             post {

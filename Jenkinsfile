@@ -50,6 +50,15 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            steps {
+                script {
+                    // Build Docker image and deploy with Docker Compose
+                    sh 'docker-compose down || true' // Stop any existing containers
+                    sh 'docker-compose up --build -d' // Build and start the container
+                }
+            }
+        }
 
     }
     post {
